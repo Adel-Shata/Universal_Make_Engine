@@ -8,6 +8,7 @@ SRC_DIR        	?= src/				 					  			# Define the directory for source files, w
 BUILD_DIR	  	 = build/				  							# Define the directory for build output, which can be overridden as needed.
 OBJS_DIR      	 = $(strip $(BUILD_DIR))objs/		  				# Define the directory for object files, which can be overridden as needed.
 FIXED_NAME 		 = $(subst $() ,$(empty),$(strip $(PROJECT_NAME))) 	# Define a fixed name for the output file by removing any spaces from the project name, which is used for naming the final executable.
+
 ##$(info >>> FIXED_NAME is: $(FIXED_NAME))                     		#For debugging
 ##$(info >>> OBJS_DIR is: $(OBJS_DIR))                     			#For debugging
 
@@ -27,8 +28,20 @@ STARTUP_OBJS 	 = $(patsubst %.s, $(strip $(OBJS_DIR))%.o, $(STARTUP)) 			 # Defi
 
 
 .PHONY: all clean
-all: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+all: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).bin $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).hex $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_readelf.txt
 	@echo "======Build completed successfully!======"
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_readelf.txt: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+	@echo "===Generating ReadElf report for $<==="
+	$(RE) $(strip $(REFLAGS)) $< > $@
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).bin: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+
+	$(CP) $(strip $(BIN_FLAGS)) $< $@
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).hex: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+	@echo "===Generating Hex file for $<==="
+	$(CP) $(strip $(HEX_FLAGS)) $< $@
 
 $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf: $(STARTUP_OBJS) $(OBJS)
 	@echo "===Compiler completed all files successfully!==="
