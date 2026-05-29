@@ -135,19 +135,19 @@ without changing the core build system.
 Example:
 
 ```bash
-make TOOLCHAIN=arm-none-eabi-
+make TOOLCHAIN=toolchain_path/arm-none-eabi-
 ```
 
 or:
 
 ```bash
-make TOOLCHAIN=avr-
+make TOOLCHAIN=toolchain_path/avr-
 ```
 
 or even:
 
 ```bash
-make TOOLCHAIN=riscv64-unknown-elf-
+make TOOLCHAIN=toolchain_path/riscv64-unknown-elf-
 ```
 
 ---
