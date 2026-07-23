@@ -17,25 +17,51 @@ RE = $(strip $(TOOLCHAIN))readelf
 ### Define the flags for the compiler, assembler, and linker. These flags can be customized as needed for the specific project requirements.
 
 ##  Compiler flags for C files.
-CFLAGS     = -c                    				# Compile and assemble, but do not link.
-CFLAGS    += -Wall -Wextra #-Werror 			# Enable all warnings and extra warnings and threat all warnings as errors, if needed
-CFLAGS    += -mcpu=arm926ej-s 					# Specify the target CPU architecture.
-CFLAGS    += -g -gdwarf-3 						# Enable debugging information in the output.
-CFLAGS    += -O0 								# Define optimization level.
-CFLAGS    += -I $(strip $(INCLUDES))			# Include the directory for header files.
+
+# Compile and assemble, but do not link.
+CFLAGS     = -c
+
+# Enable all warnings and extra warnings and threat all warnings as errors, if needed
+CFLAGS    += -Wall -Wextra -Werror
+
+# Specify the target CPU architecture.
+CFLAGS    += -mcpu=cortex-m3 
+
+# Enable debugging information in the output.
+CFLAGS    += -g -gdwarf-3
+
+# Define optimization level.
+CFLAGS    += -O0
+
+# Include the directory for header files.
+CFLAGS    += -I $(strip $(INCLUDES))
 
 ## 	Assembler flags for assembly files.
-ASFLAGS    = -mcpu=arm926ej-s 					# Specify the target CPU architecture for the assembler.
-ASFLAGS   += -g -gdwarf-3 						# Enable debugging information in the output of the assembler.
+
+# Specify the target CPU architecture for the assembler.
+ASFLAGS    = -mcpu=cortex-m3
+
+# Enable debugging information in the output of the assembler.
+ASFLAGS   += -g -gdwarf-2
 
 ##  Linker flags for linking object files into an executable.
-LDFLAGS    = -T $(strip $(LINKER_DIR))linker.ld				# Specify the linker script to use for linking the object files into an executable.
-LDFLAGS   += -Map=$(strip $(BUILD_DIR))mapfile.map 			# Generate a map file for the linked output.
+
+# Specify the linker script to use for linking the object files into an executable.
+LDFLAGS    = -T $(strip $(LINKER_DIR))linkerscript.ld
+
+# Generate a map file for the linked output.
+LDFLAGS   += -Map=$(strip $(BUILD_DIR))mapfile.map
 
 ## Binary output flags for objcopy to generate binary and hex files from the linked executable.
-BIN_FLAGS  = -O binary 							# Specify the output format for objcopy to generate a binary file.
-HEX_FLAGS += -O ihex 							# Specify the output format for objcopy to generate a hex file.
+
+# Specify the output format for objcopy to generate a binary file.
+BIN_FLAGS  = -O binary
+
+# Specify the output format for objcopy to generate a hex file.
+HEX_FLAGS += -O ihex
 
 ## Readelf flags for generating a detailed report of the linked executable.
-REFLAGS    = -a 								# Display all information about the linked executable, including headers, sections, symbols, and more.
+
+# Display all information about the linked executable, including headers, sections, symbols, and more.
+REFLAGS    = -a
 
