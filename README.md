@@ -121,6 +121,10 @@ Example:
 CC = $(strip $(TOOLCHAIN))gcc
 AS = $(strip $(TOOLCHAIN))as
 LD = $(strip $(TOOLCHAIN))ld
+CP = $(strip $(TOOLCHAIN))objcopy
+OD = $(strip $(TOOLCHAIN))objdump
+RE = $(strip $(TOOLCHAIN))readelf
+NM = $(strip $(TOOLCHAIN))nm
 ```
 
 This allows the same Makefile to work with:
