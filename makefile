@@ -47,13 +47,25 @@ STARTUP_OBJS 	 += $(patsubst %.s, $(strip $(OBJS_DIR))%.o, $(wildcard $(strip $(
 
 
 .PHONY: all clean
-all: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).bin $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).hex $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_readelf.txt
+all: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).bin $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).hex $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_readelf.txt $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_elf_info.txt $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_disassembly.txt $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_symbols.txt
 	@echo "======Build completed successfully!======"
 	@echo "======Copyright : Eng. Adel Shata!======"
 
 $(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_readelf.txt: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
 	@echo "===Generating ReadElf report for $<==="
 	$(RE) $(strip $(REFLAGS)) $< > $@
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_elf_info.txt: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+	@echo "=== Generating ELF information ==="
+	$(OD) -x $< > $@
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_disassembly.txt: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+	@echo "=== Generating Disassembly ==="
+	$(OD) -D $< > $@
+
+$(strip $(BUILD_DIR))$(strip $(FIXED_NAME))_symbols.txt: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
+	@echo "=== Generating Symbols ==="
+	$(NM) $< > $@
 
 $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).bin: $(strip $(BUILD_DIR))$(strip $(FIXED_NAME)).elf
 

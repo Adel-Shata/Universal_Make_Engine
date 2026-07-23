@@ -12,6 +12,7 @@ LD = $(strip $(TOOLCHAIN))ld
 CP = $(strip $(TOOLCHAIN))objcopy
 OD = $(strip $(TOOLCHAIN))objdump
 RE = $(strip $(TOOLCHAIN))readelf
+NM = $(strip $(TOOLCHAIN))nm
 
 
 ### Define the flags for the compiler, assembler, and linker. These flags can be customized as needed for the specific project requirements.
