@@ -28,7 +28,12 @@ FIXED_NAME 		 = $(subst $() ,$(empty),$(strip $(PROJECT_NAME)))
 #$(info >>> FIXED_NAME is: $(FIXED_NAME))
 #$(info >>> OBJS_DIR is: $(OBJS_DIR))
 
-SRC 			 = $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*.c)) 		 # Define the list of C source files in the source directory.
+SRC 			 = $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*.c)) 		   # Define the list of C source files in the source directory.
+SRC 		    += $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*/*.c))
+SRC 		    += $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*/*/*.c))
+SRC 		    += $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*/*/*/*.c))
+SRC 		    += $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*/*/*/*/*.c))
+SRC 		    += $(foreach src_dir, $(SRC_DIR), $(wildcard $(src_dir)*/*/*/*/*/*.c))
 OBJS 			 = $(addprefix $(strip $(OBJS_DIR)), $(patsubst %.c, %.o, $(SRC)))	 # Define the list of object files generated from the C source files.
 
 
